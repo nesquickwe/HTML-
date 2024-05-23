@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Girlfriend?</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffebcd;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .yes {
+            background-color: #9370db;
+            color: white;
+        }
+        .yes:hover {
+            background-color: #836fcf;
+        }
+        .no {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        .no:hover {
+            background-color: #ff4c4c;
+        }
+        #emoji {
+            display: none;
+            font-size: 50px;
+            color: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my girlfriend?</h1>
+        <button class="button yes" onclick="sendWebhook('yes')">Yes</button>
+        <button class="button no" onclick="sendWebhook('no')">No</button>
+        <div id="emoji">😊</div>
+    </div>
+    
+    <script>
+        const webhookURL = 'https://discord.com/api/webhooks/1243254928260989000/QepeujeVI_MxFg3GVt3U05DBnmDXITpN2Jpvrs6XV34d8kza_L6e_wJstRE0w1pnhjJC';
+        const noYouTubeURL = 'https://youtu.be/xvFZjo5PgG0?si=LuIv8ocGXpvUWt_n';
+
+        function sendWebhook(response) {
+            const request = new XMLHttpRequest();
+            request.open("POST", webhookURL);
+            request.setRequestHeader('Content-type', 'application/json');
+            const params = {
+                username: "rizzBot",
+                content: response === 'yes' ? "She said yes! 😊" : "She said no. 😢"
+            };
+            request.send(JSON.stringify(params));
+            
+            showEmoji(response);
+
+            if (response === 'no') {
+                setTimeout(() => {
+                    window.location.href = noYouTubeURL;
+                }, 1000);
+            }
+        }
+
+        function showEmoji(response) {
+            const emoji = document.getElementById('emoji');
+            emoji.textContent = response === 'yes' ? '😊' : '😢';
+            emoji.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
